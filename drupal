@@ -1,0 +1,30 @@
+dnf install php php-fpm php-mysqlnd php-opcache php-gd php-xml php-mbstring php-curl php-pecl-imagick php-pecl-zip libzip
+nano /etc/php.ini
+max_execution_time = 300 
+max_input_time = 300 
+memory_limit = 512M 
+post_max_size = 256M 
+upload_max_filesize = 256M
+systemctl start php-fpm
+systemctl enable php-fpm
+
+MariaDB [(none)]> CREATE DATABASE drupaldb;
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON drupaldb.* TO 'drupaluser'@'localhost' IDENTIFIED BY 'password';
+  
+wget https://www.drupal.org/download-latest/tar.gz
+tar -zxf  tar.gz
+mv drupal-10.0.7  /var/www/html/drupal
+cd /var/www/html/drupal/sites/default 
+cp -p default.settings.php settings.php 
+mkdir files
+chown -R apache:apache /var/www/html/drupal
+chmod -R 755 /var/www/html/drupal
+nano /etc/httpd/conf.d/drupal.conf
+<VirtualHost *:80>
+    ServerAdmin admin@example.com
+    ServerName drupal.example.com
+    DocumentRoot /var/www/html/drupal
+    <Directory /var/www/html/drupal>
+        Allowoverride all
+    </Directory>
+</VirtualHost>
