@@ -1,0 +1,11 @@
+mysql -u root -p
+
+mysqlben:
+  create database tesztdb;
+  CREATE USER 'user1'@'%' IDENTIFIED BY 'jelszo123';
+  GRANT ALL PRIVILEGES ON tesztdb.* TO 'user1'@'%';
+  FLUSH PRIVILEGES;
+  use tesztdb;
+  CREATE TABLE felhasznalok (id INT AUTO_INCREMENT PRIMARY KEY, nev VARCHAR(100),email VARCHAR(100));
+  INSERT INTO felhasznalok (nev, email) VALUES('Nagy Anna', 'anna@email.com'), ('Toth Peter', 'peter@email.com');
+  DELETE FROM felhasznalok WHERE id = 1;
