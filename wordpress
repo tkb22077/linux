@@ -1,0 +1,15 @@
+dnf install httpd php php-fpm
+
+wget https://www.wordpress.org/latest.tar.gz
+tar -xvf latest.tar.gz
+cd wordpress
+cp wp-config-sample.php wp-config.php
+
+<VirtualHost *:80>
+    ServerAdmin admin@example.com
+    ServerName wp.example.com
+    DocumentRoot /var/www/html/wordpress
+    <Directory /var/www/html/wordpress>
+        Allowoverride all
+    </Directory>
+</VirtualHost>
